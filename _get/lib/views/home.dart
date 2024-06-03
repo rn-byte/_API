@@ -1,8 +1,7 @@
-import 'dart:convert';
-
+import 'package:_get/models/get.dart';
+import 'package:_get/services/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,23 +11,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Map<String, dynamic>? dataMap;
-  Map<String, dynamic>? doneDataMap;
+  Get? get;
+  Data? getData;
+
+  bool isLoaded = false;
   @override
   void initState() {
     super.initState();
     hitApi();
   }
 
-  Future hitApi() async {
-    http.Response response;
-    var uri = Uri.parse('https://reqres.in/api/users/2');
-    response = await http.get(uri);
-    if (response.statusCode == 200) {
+  hitApi() async {
+    get = await GetService().hitApi() ?? "";
+
+    if (get != null) {
       setState(() {
-        dataMap = jsonDecode(response.body);
-        doneDataMap = dataMap!['data'];
-        print(doneDataMap);
+        getData = get!.data;
+        isLoaded = true;
+        //print(getData);
       });
     }
   }
@@ -42,14 +42,17 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blue,
       ),
       body: Container(
-        padding: EdgeInsets.all(9.0),
-        child: Center(
+        padding: const EdgeInsets.all(9.0),
+        child: Visibility(
+          visible: isLoaded,
+          replacement: const Center(
+            child: CupertinoActivityIndicator(),
+          ),
           child: ListTile(
-            leading: Image(image: NetworkImage(doneDataMap!["avatar"])),
-            title: Text(
-                '${doneDataMap!['first_name']} ${doneDataMap!['last_name']}'),
-            subtitle: Text(doneDataMap!['email']),
-            trailing: Text(doneDataMap!['id'].toString()),
+            leading: Image(image: NetworkImage(getData!.avatar)),
+            title: Text('${getData!.firstName} ${getData!.lastName}'),
+            subtitle: Text(getData!.email),
+            trailing: Text(getData!.id.toString()),
           ),
         ),
       ),
