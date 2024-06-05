@@ -1,6 +1,5 @@
 import 'package:_get/models/get.dart';
 import 'package:_get/services/service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   hitApi() async {
-    get = await GetService().hitApi() ?? "";
+    get = await GetService().hitApi();
 
     if (get != null) {
       setState(() {
@@ -46,14 +45,16 @@ class _HomePageState extends State<HomePage> {
         child: Visibility(
           visible: isLoaded,
           replacement: const Center(
-            child: CupertinoActivityIndicator(),
+            child: CircularProgressIndicator(),
           ),
-          child: ListTile(
-            leading: Image(image: NetworkImage(getData!.avatar)),
-            title: Text('${getData!.firstName} ${getData!.lastName}'),
-            subtitle: Text(getData!.email),
-            trailing: Text(getData!.id.toString()),
-          ),
+          child: getData == null
+              ? const CircularProgressIndicator()
+              : ListTile(
+                  leading: Image(image: NetworkImage(getData!.avatar)),
+                  title: Text('${getData!.firstName} ${getData!.lastName}'),
+                  subtitle: Text(getData!.email),
+                  trailing: Text(getData!.id.toString()),
+                ),
         ),
       ),
     );
