@@ -1,5 +1,6 @@
 import 'package:_get/models/get.dart';
 import 'package:_get/services/service.dart';
+import 'package:_get/views/list_views.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,10 +18,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    hitApi();
+    hitAPI();
   }
 
-  hitApi() async {
+  hitAPI() async {
     get = await GetService().hitApi();
 
     if (get != null) {
@@ -39,6 +40,21 @@ class _HomePageState extends State<HomePage> {
         title: const Text('GET API'),
         centerTitle: true,
         backgroundColor: Colors.blue,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ListviewScreen(),
+                  )),
+              child: const Icon(
+                Icons.arrow_forward_ios_sharp,
+              ),
+            ),
+          )
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(9.0),
