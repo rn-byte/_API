@@ -41,11 +41,13 @@ class _ListviewScreenState extends State<ListviewScreen> {
           return getData == null
               ? const CupertinoActivityIndicator()
               : ListTile(
-                  leading: Text(getData![index].id.toString()),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(getData![index].avatar),
+                  ),
                   title: Text(
                       "${getData![index].firstName} ${getData![index].lastName}"),
                   subtitle: Text(getData![index].email),
-                  trailing: Image(image: NetworkImage(getData![index].avatar)),
+                  trailing: Text(getData![index].id.toString()),
                 );
         },
       ),
