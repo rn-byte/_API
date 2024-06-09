@@ -49,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
+                      controller: loginValues.uemailController,
                       decoration: InputDecoration(
                         hintText: 'Enter Email',
                         prefixIcon: const Icon(Icons.email),
@@ -77,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: loginValues.upassController,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Enter Password',
@@ -116,7 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (isValid) {
                             loginProvider.loginFormKey.currentState!.save();
                             loginValues.userLogin(
-                                loginValues.userEmail, loginValues.userPass);
+                                loginValues.userEmail,
+                                loginValues.userPass,
+                                loginValues.uemailController,
+                                loginValues.upassController);
                           }
                         },
                         child: const Text(

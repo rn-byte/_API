@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -15,6 +16,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Dashboard'),
         centerTitle: true,
         backgroundColor: Colors.blue,
+      ),
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Fluttertoast.showToast(
+                  msg: 'This is Toast Message !',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER);
+            },
+            child: const Text('Click Me')),
       ),
     );
   }
