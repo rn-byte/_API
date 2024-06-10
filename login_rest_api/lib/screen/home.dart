@@ -21,9 +21,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ElevatedButton(
             onPressed: () {
               Fluttertoast.showToast(
-                  msg: 'This is Toast Message !',
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER);
+                msg: 'This is Toast Message !',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+              );
             },
             child: const Text('Click Me')),
       ),

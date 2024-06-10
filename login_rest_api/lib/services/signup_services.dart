@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../screen/home.dart';
 
-class UserLoginService {
-  static loginFun(String userEmail, String userPass) async {
+class UserSignupService {
+  static signupFun(String userEmail, String userPass) async {
     try {
       var header = {
         'content-type': 'application/json',
@@ -18,17 +18,18 @@ class UserLoginService {
       };
 
       http.Response response = await http.post(
-        Uri.parse('https://reqres.in/api/login'),
+        Uri.parse('https://reqres.in/api/register'),
         headers: header,
         body: jsonEncode(body),
       );
 
       if (response.statusCode == 200) {
         Map json = jsonDecode(response.body.toString());
+        debugPrint(json['id'].toString());
         debugPrint(json['token']);
         if (json['token'] != '') {
           Fluttertoast.showToast(
-              msg: 'Login Successful !',
+              msg: 'Signup Successful !',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER);
           Get.offAll(() => const MyHomePage());

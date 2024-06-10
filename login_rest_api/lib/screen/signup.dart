@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:login_rest_api/controller/login_controller.dart';
-import 'package:login_rest_api/screen/signup.dart';
+
+import 'package:login_rest_api/screen/login.dart';
 import 'package:login_rest_api/utils/text_filed_style.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../controller/signup_controller.dart';
+
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     //creating instance of controller class
-    final loginProvider = Provider.of<LoginController>(context, listen: false);
+    final signupProvider =
+        Provider.of<SignupController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Signup'),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
@@ -42,15 +45,15 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           //creating consumer for extracting the value of controller class
-          child: Consumer<LoginController>(
-            builder: (context, loginValues, child) {
+          child: Consumer<SignupController>(
+            builder: (context, signupValues, child) {
               return Form(
-                key: loginValues.loginFormKey,
+                key: signupValues.signupFormKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextFormField(
-                      controller: loginValues.uemailController,
+                      controller: signupValues.uemailController,
                       decoration: InputDecoration(
                         hintText: 'Enter Email',
                         prefixIcon: const Icon(Icons.email),
@@ -72,14 +75,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       onSaved: (value) {
-                        loginValues.userEmail = value.toString();
+                        signupValues.userEmail = value.toString().trim();
                       },
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
-                      controller: loginValues.upassController,
+                      controller: signupValues.upassController,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Enter Password',
@@ -100,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       onSaved: (newValue) {
-                        loginValues.userPass = newValue.toString();
+                        signupValues.userPass = newValue.toString();
                       },
                     ),
                     const SizedBox(
@@ -113,20 +116,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor:
                                 WidgetStatePropertyAll(Colors.blue[300])),
                         onPressed: () {
-                          final isValid = loginProvider
-                              .loginFormKey.currentState!
+                          final isValid = signupProvider
+                              .signupFormKey.currentState!
                               .validate();
                           if (isValid) {
-                            loginProvider.loginFormKey.currentState!.save();
-                            loginValues.userLogin(
-                                loginValues.userEmail,
-                                loginValues.userPass,
-                                loginValues.uemailController,
-                                loginValues.upassController);
+                            signupProvider.signupFormKey.currentState!.save();
+                            signupValues.userSignup(
+                                signupValues.userEmail,
+                                signupValues.userPass,
+                                signupValues.uemailController,
+                                signupValues.upassController);
                           }
                         },
                         child: const Text(
-                          'Login',
+                          'Signup',
                           style: TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
@@ -139,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          'Don\'t have an account ? ',
+                          'Already have an account ? ',
                           style: TextStyle(fontSize: 13),
                         ),
                         GestureDetector(
@@ -147,11 +150,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const SignupScreen(),
+                                  builder: (context) => const LoginScreen(),
                                 ));
                           },
                           child: const Text(
-                            ' Signup',
+                            ' Login',
                             style: TextStyle(
                               color: Colors.blue,
                               //decoration: TextDecoration.underline,
