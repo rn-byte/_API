@@ -38,6 +38,12 @@ class UserLoginService {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER);
         }
+      } else {
+        debugPrint('unsuccessful');
+        Fluttertoast.showToast(
+            msg: 'Invalid Credentials',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER);
       }
     } catch (e) {
       debugPrint('Error : $e');

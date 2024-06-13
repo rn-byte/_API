@@ -147,6 +147,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            signupValues.uemailController.clear();
+                            signupValues.upassController.clear();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

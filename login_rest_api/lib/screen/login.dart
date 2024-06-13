@@ -144,6 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            loginValues.uemailController.clear();
+                            loginValues.upassController.clear();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
