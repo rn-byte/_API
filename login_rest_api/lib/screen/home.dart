@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_rest_api/screen/users_details.dart';
 
 import 'package:login_rest_api/services/remote_services.dart';
 
@@ -46,17 +47,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: PageView(
         controller: pageController,
+        onPageChanged: onTapped,
         children: [
           _containerPost(),
           const GetPhotos(),
+          const UserDetailsScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.get_app), label: 'Get'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
-          //BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.photo), label: 'Photos'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Users'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
         ],
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.indigo,

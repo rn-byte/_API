@@ -12,7 +12,7 @@ class GetPhotos extends StatefulWidget {
 
 class _GetPhotosState extends State<GetPhotos> {
   List<Photos> photoList = [];
-  bool isLoaded = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,9 +33,7 @@ class _GetPhotosState extends State<GetPhotos> {
             thumbnailUrl: i['thumbnailUrl']);
         photoList.add(photos);
       }
-      setState(() {
-        isLoaded = true;
-      });
+      setState(() {});
       return photoList;
     } else {
       return photoList;
@@ -47,24 +45,40 @@ class _GetPhotosState extends State<GetPhotos> {
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemCount: photoList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                "${photoList[index].id}. ${photoList[index].title}",
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                photoList[index].thumbnailUrl,
-                maxLines: 3,
-                overflow: TextOverflow.fade,
-              ),
-            );
-          },
+        child: FutureBuilder(
+          future: getPhotos(),
+          builder: (context, AsyncSnapshot<List<Photos>> snapshot) =>
+              snapshot.data == null
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: photoList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(snapshot.data![index].url),
+                          ),
+                          title: Text(
+                            "${snapshot.data![index].id}. ${snapshot.data![index].title}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            snapshot.data![index].albumId.toString(),
+                            maxLines: 3,
+                            overflow: TextOverflow.fade,
+                          ),
+                          trailing: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                snapshot.data![index].thumbnailUrl),
+                          ),
+                        );
+                      },
+                    ),
         ),
       ),
     );
