@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
-
-import '../screen/home.dart';
+import 'package:login_rest_api/screen/login.dart';
 
 class UserSignupService {
   static signupFun(String userEmail, String userPass) async {
@@ -32,7 +31,7 @@ class UserSignupService {
               msg: 'Signup Successful !',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER);
-          Get.offAll(() => const MyHomePage());
+          Get.offAll(() => const LoginScreen());
         } else {
           Fluttertoast.showToast(
               msg: 'Invalid Credentials',

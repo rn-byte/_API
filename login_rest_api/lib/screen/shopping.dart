@@ -40,14 +40,51 @@ class _ShopScreenState extends State<ShopScreen> {
             : ListView.builder(
                 itemCount: dataList!.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * .1,
-                    width: MediaQuery.of(context).size.width * .2,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                              dataList![index].images[index].url.toString())),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(dataList![index].shop.image),
+                          ),
+                          title: Text(dataList![index].shop.name),
+                          subtitle: Text(dataList![index].shop.shopemail),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .5,
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: dataList![index].images.length,
+                            itemBuilder: (context, position) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * .25,
+                                  width: MediaQuery.of(context).size.width * .5,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(dataList![index]
+                                            .images[position]
+                                            .url
+                                            .toString())),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Icon(dataList![index].inWishlist == false
+                            ? Icons.favorite
+                            : Icons.favorite_outline),
+                      ],
                     ),
                   );
                 },

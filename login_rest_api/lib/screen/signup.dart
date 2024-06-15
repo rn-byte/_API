@@ -14,6 +14,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  bool isObscure = true;
   @override
   Widget build(BuildContext context) {
     //creating instance of controller class
@@ -50,90 +51,91 @@ class _SignupScreenState extends State<SignupScreen> {
               return Form(
                 key: signupValues.signupFormKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextFormField(
-                      controller: signupValues.uemailController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Email',
-                        prefixIcon: const Icon(Icons.email),
-                        label: const Text('Enter Email'),
-                        enabledBorder: outlineInputBorder(color: Colors.black),
-                        focusedBorder: outlineInputBorder(color: Colors.blue),
-                        errorBorder: outlineInputBorder(color: Colors.red),
-                        focusedErrorBorder:
-                            outlineInputBorder(color: Colors.blue),
-                      ),
-                      validator: (value) {
-                        if (value.toString().isEmpty) {
-                          return 'Enter email';
-                        } else if (!(value.toString().contains(RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")))) {
-                          return 'Invalid Email';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) {
-                        signupValues.userEmail = value.toString().trim();
-                      },
+                    const Icon(
+                      Icons.person,
+                      size: 100,
+                      color: Colors.lightBlue,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      controller: signupValues.upassController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Password',
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: const Icon(Icons.remove_red_eye),
-                        label: const Text('Enter Password'),
-                        enabledBorder: outlineInputBorder(color: Colors.black),
-                        focusedBorder: outlineInputBorder(color: Colors.blue),
-                        errorBorder: outlineInputBorder(color: Colors.red),
-                        focusedErrorBorder:
-                            outlineInputBorder(color: Colors.blue),
-                      ),
-                      validator: (value) {
-                        if (value.toString().isEmpty) {
-                          return 'Enter Password';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (newValue) {
-                        signupValues.userPass = newValue.toString();
-                      },
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.blue[300])),
-                        onPressed: () {
-                          final isValid = signupProvider
-                              .signupFormKey.currentState!
-                              .validate();
-                          if (isValid) {
-                            signupProvider.signupFormKey.currentState!.save();
-                            signupValues.userSignup(
-                                signupValues.userEmail,
-                                signupValues.userPass,
-                                signupValues.uemailController,
-                                signupValues.upassController);
-                          }
-                        },
-                        child: const Text(
-                          'Signup',
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                    Column(
+                      children: [
+                        TextFormField(
+                          controller: signupValues.uemailController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter Email',
+                            prefixIcon: const Icon(Icons.email),
+                            label: const Text('Enter Email'),
+                            enabledBorder:
+                                outlineInputBorder(color: Colors.black),
+                            focusedBorder:
+                                outlineInputBorder(color: Colors.blue),
+                            errorBorder: outlineInputBorder(color: Colors.red),
+                            focusedErrorBorder:
+                                outlineInputBorder(color: Colors.blue),
+                          ),
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
+                              return 'Enter email';
+                            } else if (!(value.toString().contains(RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")))) {
+                              return 'Invalid Email';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) {
+                            signupValues.userEmail = value.toString().trim();
+                          },
                         ),
-                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: signupValues.upassController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: 'Enter Password',
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isObscure = !isObscure;
+                                });
+                              },
+                              child: Icon(isObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
+                            label: const Text('Enter Password'),
+                            enabledBorder:
+                                outlineInputBorder(color: Colors.black),
+                            focusedBorder:
+                                outlineInputBorder(color: Colors.blue),
+                            errorBorder: outlineInputBorder(color: Colors.red),
+                            focusedErrorBorder:
+                                outlineInputBorder(color: Colors.blue),
+                          ),
+                          validator: (value) {
+                            if (value.toString().isEmpty) {
+                              return 'Enter Password';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (newValue) {
+                            signupValues.userPass = newValue.toString();
+                          },
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child:
+                              _signElevatedButton(signupProvider, signupValues),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -171,6 +173,26 @@ class _SignupScreenState extends State<SignupScreen> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  ElevatedButton _signElevatedButton(
+      SignupController signupProvider, SignupController signupValues) {
+    return ElevatedButton(
+      style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(Colors.blue[300])),
+      onPressed: () {
+        final isValid = signupProvider.signupFormKey.currentState!.validate();
+        if (isValid) {
+          signupProvider.signupFormKey.currentState!.save();
+          signupValues.userSignup(signupValues.userEmail, signupValues.userPass,
+              signupValues.uemailController, signupValues.upassController);
+        }
+      },
+      child: const Text(
+        'Signup',
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       ),
     );
   }
