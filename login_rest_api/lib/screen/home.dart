@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_rest_api/screen/shopping.dart';
 import 'package:login_rest_api/screen/users_details.dart';
 
 import 'package:login_rest_api/services/remote_services.dart';
@@ -52,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _containerPost(),
           const GetPhotos(),
           const UserDetailsScreen(),
+          const ShopScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -60,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.photo), label: 'Photos'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Users'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Shopping'),
         ],
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.indigo,
