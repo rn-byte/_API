@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:login_rest_api/controller/login_controller.dart';
 import 'package:login_rest_api/controller/signup_controller.dart';
+import 'package:login_rest_api/screen/image_upload.dart';
 import 'package:login_rest_api/screen/login.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const LoginScreen(),
+        home: const ImageUpload(),
       ),
     );
   }
