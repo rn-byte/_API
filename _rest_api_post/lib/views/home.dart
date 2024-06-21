@@ -1,5 +1,6 @@
 import 'package:_rest_api_post/models/post.dart';
 import 'package:_rest_api_post/services/remote_service.dart';
+import 'package:_rest_api_post/views/dropdown_view.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -90,6 +91,16 @@ class _HomeState extends State<Home> {
           },
           itemCount: posts?.length,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DropdownViewDemo(),
+              ));
+        },
       ),
     );
   }
