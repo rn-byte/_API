@@ -1,3 +1,4 @@
+import 'package:_rest_api_post/views/combined_request.dart';
 import 'package:_rest_api_post/views/home.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
+      home: const CombinedRequestDemo(),
     );
   }
 }
